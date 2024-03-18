@@ -1,55 +1,92 @@
 
+// creation d'un module auto appelant pour l'encapsulation de la logique 
+let gestionnaireTache =(function(){
 
-/* 
-function Ajout_tache(tache){
+   // declaration du compteur 
+    let nombreLi = 0 ;
 
-    mytasks.push(tache)
+    function incrementationCompteur(){
+        nombreLi++;
+        document.querySelector(".nombreLi").textContent = nombreLi;
+    }
 
-}
+    function decrementationCompteur(){
+        nombreLi--;
+        document.querySelector(".nombreLi").textContent = nombreLi;
+    }
 
-
-
-const tache = document.querySelector("#nomTache")
- */
-//mytasks.push(tache.value)
-
-// bouton ajout de tâche 
-
-/* const bouttonAjouter = document.querySelector("#buttonAjouter");
-
-bouttonAjouter.addEventListener("click" , ()=> {
-    Ajout_tache(tache.value)
-});
- */
-
+    return   {
+        incrementationCompteur,
+        decrementationCompteur
+    };
+})();
 
 
 
 
 
+// declaration du compteur 
 
+let nombreLi = 0 ;
 
-
-// une liste des taches à ajouter 
-
-// à supprimmer 
-
-// à modifier 
-
-
-// stocker dans un tableau 
-
-
-// voir le nombre de tâche 
 
 const inputchamp = document.querySelector('#nomTache');   
 const ouputchamp = document.querySelector('.list-group');
 
-function bouttonAjouter(){
 
-     // creation d'une nouvlle li 
+function creationBouttonSupprimer(){
+
+    const boutonSupprimer = document.createElement('button');
+    boutonSupprimer.className ='ms-auto btn btn-danger btn-sm';
+    boutonSupprimer.innerHTML ='<i class="bi-trash"></i>';
+
+    return boutonSupprimer ;
+}
+
+function actionButtonSupprimer(div){
+    div.style.transform = 'translateY(-150px)'; 
+    div.style.position   = 'relative';
+    div.style.transition = 'transform 1s';
+
+    setTimeout(function() {
+
+        div.remove(); // Supprimer l'élément du DOM après que la transition d'opacité soit terminée
+
+        // décrementation du nombre total de li 
+        gestionnaireTache.decrementationCompteur();
+
+    }, 1000);
+
+}
+
+
+function creationBouttonModifier() {
+    const boutonModifier = document.createElement('button');
+    boutonModifier.className = 'btn btn-info ms-auto'; // Ajout de la classe ms-2 pour décalage à gauche
+    boutonModifier.innerHTML = '<i class="fas fa-pencil-alt"></i> Modifier';
+
+    // style sur le button 
+
+    boutonModifier.style.color = '#fff';
+    boutonModifier.style.backgroundColor = '#17a2b8';
+    boutonModifier.style.borderColor = '#17a2b8';
+    //boutonModifier.style.padding = '5px 10px';
+    boutonModifier.style.borderRadius = '5px';
+
+
+    return boutonModifier;
+}
+
+
+function bouttonAjouter(){ 
+
+    // creation d'une nouvlle li 
     const li = document.createElement('li');
     li.classList ='todo list-group-item d-flex align-items-center';
+
+    // incrémentation des Li : le nombre total de li
+    gestionnaireTache.incrementationCompteur();
+
 
     // creation du label
     const label = document.createElement("label");
@@ -64,10 +101,13 @@ function bouttonAjouter(){
     inputCheckbox.type = 'checkbox';
     
     // boutton suppression 
+    const boutonSupprimer = creationBouttonSupprimer();
 
-    const boutonSupprimer = document.createElement('button');
-    boutonSupprimer.className ='ms-auto btn btn-danger btn-sm';
-    boutonSupprimer.innerHTML ='<i class="bi-trash"></i>';
+    boutonSupprimer.addEventListener('click',function(){
+        actionButtonSupprimer(li);
+    });
+
+   
 
 
     const inputchampvalue = inputchamp.value;
@@ -81,28 +121,13 @@ function bouttonAjouter(){
         
         li.appendChild(inputCheckbox);
         li.appendChild(label);
+     
+        //li.appendChild(creationBouttonModifier());
         li.appendChild(boutonSupprimer);
+        //li.appendChild(boutonSupprimer);
 
         inputchamp.value = "";
     }
     
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
