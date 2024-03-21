@@ -59,8 +59,10 @@ function actionButtonSupprimer(div){
 
 }
 
+// fonction modifier 
 
 function creationBouttonModifier() {
+
     const boutonModifier = document.createElement('button');
     boutonModifier.className = 'btn btn-info ms-auto'; // Ajout de la classe ms-2 pour décalage à gauche
     boutonModifier.innerHTML = '<i class="fas fa-pencil-alt"></i> Modifier';
@@ -77,6 +79,7 @@ function creationBouttonModifier() {
     return boutonModifier;
 }
 
+// ajout dans la todo_list 
 
 function bouttonAjouter(){ 
 
